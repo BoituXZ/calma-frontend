@@ -1,99 +1,82 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
 @import "tailwindcss";
+
 /* Definition of the design system. All colors, gradients, fonts, etc should be defined here. */
 
-@layer base {
-  :root {
-    /* Mental Health Color Palette */
-    --background: 0 0% 97%; /* #F7F7F7 - Very light, neutral gray */
-    --foreground: 220 13% 26%; /* #374151 - Dark, readable gray */
+@theme {
+  --color-primary: #65b6c9;
+  --color-secondary: #4ebcb1;
+  
+  --font-nuno: 'Nunito', sans-serif;
+  /* Light theme colors */
+  --color-background: #f7f7f7;
+  --color-foreground: #374151;
+  --color-card: #ffffff;
+  --color-card-foreground: #374151;
+  --color-popover: #ffffff;
+  --color-popover-foreground: #374151;
+  --color-primary: #4db6ac;
+  --color-primary-foreground: #ffffff;
+  --color-secondary: #64b5f6;
+  --color-secondary-foreground: #ffffff;
+  --color-muted: #f4f6f8;
+  --color-muted-foreground: #6b7280;
+  --color-accent: #4db6ac;
+  --color-accent-foreground: #ffffff;
+  --color-destructive: #ef4444;
+  --color-destructive-foreground: #fafafa;
+  --color-border: #e5e7eb;
+  --color-input: #e5e7eb;
+  --color-ring: #4db6ac;
+  --color-sidebar-background: #fafafa;
+  --color-sidebar-foreground: #374151;
+  --color-sidebar-primary: #1f2937;
+  --color-sidebar-primary-foreground: #fafafa;
+  --color-sidebar-accent: #f3f4f6;
+  --color-sidebar-accent-foreground: #1f2937;
+  --color-sidebar-border: #d1d5db;
+  --color-sidebar-ring: #3b82f6;
 
-    --card: 0 0% 100%;
-    --card-foreground: 220 13% 26%;
+  /* Dark theme colors */
+  --color-background-dark: #0c1220;
+  --color-foreground-dark: #f9fafb;
+  --color-card-dark: #0c1220;
+  --color-card-foreground-dark: #f9fafb;
+  --color-popover-dark: #0c1220;
+  --color-popover-foreground-dark: #f9fafb;
+  --color-primary-dark: #f9fafb;
+  --color-primary-foreground-dark: #1e293b;
+  --color-secondary-dark: #1e293b;
+  --color-secondary-foreground-dark: #f9fafb;
+  --color-muted-dark: #1e293b;
+  --color-muted-foreground-dark: #94a3b8;
+  --color-accent-dark: #1e293b;
+  --color-accent-foreground-dark: #f9fafb;
+  --color-destructive-dark: #7f1d1d;
+  --color-destructive-foreground-dark: #f9fafb;
+  --color-border-dark: #1e293b;
+  --color-input-dark: #1e293b;
+  --color-ring-dark: #cbd5e1;
+  --color-sidebar-background-dark: #1f2937;
+  --color-sidebar-foreground-dark: #f3f4f6;
+  --color-sidebar-primary-dark: #3b82f6;
+  --color-sidebar-primary-foreground-dark: #ffffff;
+  --color-sidebar-accent-dark: #111827;
+  --color-sidebar-accent-foreground-dark: #f3f4f6;
+  --color-sidebar-border-dark: #111827;
+  --color-sidebar-ring-dark: #3b82f6;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 220 13% 26%;
-
-    --primary: 174 45% 52%; /* #4DB6AC - Gentle, muted teal */
-    --primary-foreground: 0 0% 100%;
-
-    --secondary: 207 61% 67%; /* #64B5F6 - Soft, supportive blue */
-    --secondary-foreground: 0 0% 100%;
-
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-
-    --accent: 174 45% 52%;
-    --accent-foreground: 0 0% 100%;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 174 45% 52%;
-
-    --radius: 0.75rem;
-
-    --sidebar-background: 0 0% 98%;
-
-    --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
-  }
-
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
-  }
+  --radius: 0.75rem;
 }
 
 @layer base {
-
   body {
-    background-color: hsl(var(--background));
-    color: hsl(var(--foreground));
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+  }
+
+  .dark body {
+    background-color: var(--color-background-dark);
+    color: var(--color-foreground-dark);
   }
 }
