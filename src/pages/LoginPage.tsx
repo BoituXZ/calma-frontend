@@ -52,8 +52,8 @@ const LoginPage = () => {
   const displayError = formError || authError;
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8">
+    <div className="min-h-screen flex items-center justify-center bg-background py-12 px-4 sm:px-6 lg:px-8">
+      <div className="rounded-lg w-[95%] md:max-w-[30%] bg-white shadow-md  m-auto  p-4 text-card-foreground flex flex-col gap-4">
         <div className="text-center">
           <div className="mx-auto w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center">
             <Heart className="h-8 w-8 text-primary" />
@@ -119,7 +119,7 @@ const LoginPage = () => {
             </button>
           </div>
 
-          <div className="text-center">
+          <div className="text-right">
             <p className="text-sm text-gray-600">
               Don't have an account?{' '}
               <Link 
