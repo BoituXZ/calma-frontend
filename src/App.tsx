@@ -11,6 +11,7 @@ import ChatPage from "./pages/ChatPage";
 import MoodPage from "./pages/MoodPage";
 import SettingsPage from "./pages/SettingsPage";
 import AppLayout from "./layout/AppLayout";
+import ResourcesPage from "./pages/ResourcesPage";
 
 const App = () => {
     return (
@@ -76,7 +77,7 @@ const App = () => {
                         index
                         element={
                             <ProtectedRoute>
-                                <DashboardPage />
+                                <ResourcesPage />
                             </ProtectedRoute>
                         }
                     />

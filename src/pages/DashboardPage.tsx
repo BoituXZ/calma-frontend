@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import {
     Book,
     Calendar,
@@ -5,16 +6,14 @@ import {
     HeartPulse,
     MessageCircle,
 } from "lucide-react";
-import { useState } from "react";
 
 const DashboardPage = () => {
     const timeOfDay = "Afternoon";
     const username = "Boitumelo";
-    const [selectedMood, setSelectedMood] = useState(null);
     const moods = [1, 2, 3, 4, 5];
     return (
         <div className="dashboardContainer min-h-screen min-w-screen  flex flex-col gap-2 bg-background p-4 space-y-6">
-            <div className="greeting border p-2 ">
+            <div className="greeting p-2 ">
                 <h1 className="text-center text-2xl font-semibold ">
                     Good {timeOfDay},<br /> {username}
                 </h1>
@@ -23,7 +22,7 @@ const DashboardPage = () => {
                 </p>
             </div>
             <div className="dashboardContent flex flex-col gap-2 justify-between h-full">
-                <div className="sectionOne  flex flex-col md:flex-row w-full gap-4 border">
+                <div className="sectionOne  flex flex-col md:flex-row w-full gap-4 ">
                     <div className="conversationCard p-6  flex-2 flex flex-col justify-center items-center gap-2 border border-primary/20 bg-card rounded-lg  bg-card text-card-foreground shadow-sm h-full cursor-pointer border-primary/20 hover:border-primary/40 transition-colors   ">
                         <div className="bg-primary/10 rounded-full p-4">
                             <MessageCircle className="text-primary h-8 w-8" />
@@ -97,12 +96,14 @@ const DashboardPage = () => {
                     </div>
                 </div>
                 <div className="sectionThree w-full">
-                    <div className="moodTrend space-y-4 p-6  border border-primary/20 bg-card rounded-lg font-medium bg-card text-card-foreground shadow-sm h-full cursor-pointer border-primary/20 hover:border-primary/40 transition-colors">
-                        CHart here
-                    </div>
+                    <Link to="/app/mood">
+                        <div className="moodTrend space-y-4 p-6  border border-primary/20 bg-card rounded-lg font-medium bg-card text-card-foreground shadow-sm h-full cursor-pointer border-primary/20 hover:border-primary/40 transition-colors">
+                            View Mood Chart
+                        </div>
+                    </Link>
                 </div>
-                <div className="sectionFour w-full  flex flex-row border">
-                    <div className="quicklinks flex flex-col md:flex-row  border border-red-500 w-full  gap-4 ">
+                <div className="sectionFour w-full  flex flex-row">
+                    <div className="quicklinks flex flex-col md:flex-row  w-full  gap-4 ">
                         <div className="bg-card h-20 md:h-full flex p-2 w-full flex-col justify-between items-center rounded-lg  bg-card text-card-foreground shadow-sm  cursor-pointer border-primary/20 hover:border-primary/40 transition-colors   ">
                             <Contact className="text-secondary" />
                             <h3 className="font-semibold">Find Therapist</h3>
@@ -119,11 +120,13 @@ const DashboardPage = () => {
                         </div>
                         <div className="bg-card w-full  flex flex-col justify-between items-center rounded-lg  bg-card text-card-foreground shadow-sm h-full cursor-pointer border-primary/20 hover:border-primary/40 transition-colors   ">
                             <Calendar />
-                            <h3 className="font-semibold">Mood History</h3>
-                            <p className="text-muted-foreground">
-                                {" "}
-                                View Detailed Patterns
-                            </p>
+                            <Link to="/app/mood">
+                                <h3 className="font-semibold">Mood History</h3>
+                                <p className="text-muted-foreground">
+                                    {" "}
+                                    View Detailed Patterns
+                                </p>
+                            </Link>
                         </div>
                     </div>
                 </div>
