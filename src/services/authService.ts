@@ -5,6 +5,10 @@ const API_BASE_URL =
     process.env?.REACT_APP_API_URL ||
     "/api"; // Use proxy in development
 
+
+
+
+
 export async function registerUser(user: RegisterUser) {
     const { name, emailAddress, password } = user;
 

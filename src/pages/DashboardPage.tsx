@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
     Book,
     Calendar,
@@ -6,19 +6,62 @@ import {
     HeartPulse,
     MessageCircle,
 } from "lucide-react";
+import { useEffect, useState } from "react";
+import { getCurrentUser } from "../services/authService";
+
+
+
 
 const DashboardPage = () => {
     const timeOfDay = "Afternoon";
-    const username = "Boitumelo";
-    const moods = [1, 2, 3, 4, 5];
+    const [isLoading, setIsLoading] = useState(true)
+    const [user, setUser] = useState({});
+    const navigate = useNavigate()
+    const moods = [{id: 1, value: 1}, {id: 2, value: 2}, {id: 3, value: 3}, {id: 4, value: 4}, {id: 5,value: 5}];
+
+    // TODO: Send Moods to the backend
+    // TODO: Populate user details, moood chart
+
+    useEffect(()=>{
+        fetchDashboardData()
+    }, [])
+
+
+
+    async function fetchDashboardData(){
+        try{
+            const user = await getCurrentUser()
+            console.log(user)
+            setUser(user)
+            setIsLoading(false)
+        }catch(error){
+        console.log("Failed to get user", error)
+
+        }
+    }
+
+    async function sendMood(mood:number) {
+        console.log(mood)
+    }
+
+        if (isLoading){
+        return(
+            <div className="flex justify-center items-center">
+            <p className="text-center">Page Loading</p>
+            </div>
+        )
+    }
+    
     return (
         <div className="dashboardContainer min-h-screen min-w-screen  flex flex-col gap-2 bg-background p-4 space-y-6">
             <div className="greeting p-2 ">
                 <h1 className="text-center text-2xl font-semibold ">
-                    Good {timeOfDay},<br /> {username}
+                    Good {timeOfDay},<br /> 
                 </h1>
+                
                 <p className="text-center text-muted-foreground text-lg">
                     How are you taking care of yourself today?
+                    
                 </p>
             </div>
             <div className="dashboardContent flex flex-col gap-2 justify-between h-full">
@@ -33,7 +76,12 @@ const DashboardPage = () => {
                         <p className="text-muted-foreground text-sm">
                             Connect with our AI support companion
                         </p>
-                        <button className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 shadow-lg hover:shadow-xl transition-shadow duration-300 w-full">
+                        <button
+                        
+                        onClick={()=>{
+                            navigate('chat')
+                        }}
+                        className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 shadow-lg hover:shadow-xl transition-shadow duration-300 w-full">
                             Begin Chat
                         </button>
                     </div>
@@ -85,10 +133,11 @@ const DashboardPage = () => {
                             <div className="moodGroup w-full flex flex-row justify-between items-center p-1">
                                 {moods.map((mood) => (
                                     <button
-                                        key={mood}
+                                        key={mood.id}
                                         className="bg-primary rounded-full text-primary-foreground text-sm font-medium w-8 h-8 shadow-lg border border-primary/70"
+                                        onClick={()=>{sendMood(mood.value)}}
                                     >
-                                        {mood}
+                                        {mood.value}
                                     </button>
                                 ))}
                             </div>
