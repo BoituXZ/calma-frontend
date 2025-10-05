@@ -15,7 +15,7 @@ import { getCurrentUser } from "../services/authService";
 const DashboardPage = () => {
     const timeOfDay = "Afternoon";
     const [isLoading, setIsLoading] = useState(true)
-    const [user, setUser] = useState({});
+    const [user, setUser] = useState<any>(null);
     const navigate = useNavigate()
     const moods = [{id: 1, value: 1}, {id: 2, value: 2}, {id: 3, value: 3}, {id: 4, value: 4}, {id: 5,value: 5}];
 
@@ -30,13 +30,13 @@ const DashboardPage = () => {
 
     async function fetchDashboardData(){
         try{
-            const user = await getCurrentUser()
-            console.log(user)
-            setUser(user)
-            setIsLoading(false)
+            const response = await getCurrentUser()
+            console.log(response)
+            setUser(response.user)
         }catch(error){
-        console.log("Failed to get user", error)
-
+            console.log("Failed to get user", error)
+        } finally {
+            setIsLoading(false)
         }
     }
 
@@ -56,7 +56,7 @@ const DashboardPage = () => {
         <div className="dashboardContainer min-h-screen min-w-screen  flex flex-col gap-2 bg-background p-4 space-y-6">
             <div className="greeting p-2 ">
                 <h1 className="text-center text-2xl font-semibold ">
-                    Good {timeOfDay},<br /> 
+                    Good {timeOfDay},<br /> {user?.name}
                 </h1>
                 
                 <p className="text-center text-muted-foreground text-lg">
