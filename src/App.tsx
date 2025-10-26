@@ -8,10 +8,15 @@ import DashboardPage from "./pages/DashboardPage";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import { AuthRedirect } from "./components/AuthRedirect";
 import ChatPage from "./pages/ChatPage";
+import ChatSelectorPage from "./pages/ChatSelectorPage";
 import MoodPage from "./pages/MoodPage";
 import SettingsPage from "./pages/SettingsPage";
 import AppLayout from "./layout/AppLayout";
 import ResourcesPage from "./pages/ResourcesPage";
+import CulturalProfilePage from "./pages/CulturalProfilePage";
+import TherapistsPage from "./pages/TherapistsPage";
+import TherapistChatPage from "./pages/TherapistChatPage";
+import AppointmentsPage from "./pages/AppointmentsPage";
 
 const App = () => {
     return (
@@ -56,7 +61,14 @@ const App = () => {
                     />
                     <Route
                         path="/app/chat"
-                        index
+                        element={
+                            <ProtectedRoute>
+                                <ChatSelectorPage />
+                            </ProtectedRoute>
+                        }
+                    />
+                    <Route
+                        path="/app/chat/ai"
                         element={
                             <ProtectedRoute>
                                 <ChatPage />
@@ -90,7 +102,45 @@ const App = () => {
                             </ProtectedRoute>
                         }
                     />
+                    <Route
+                        path="/app/therapists"
+                        index
+                        element={
+                            <ProtectedRoute>
+                                <TherapistsPage />
+                            </ProtectedRoute>
+                        }
+                    />
+                    <Route
+                        path="/app/appointments"
+                        index
+                        element={
+                            <ProtectedRoute>
+                                <AppointmentsPage />
+                            </ProtectedRoute>
+                        }
+                    />
                 </Route>
+
+                {/* Cultural Profile - Outside AppLayout for full screen */}
+                <Route
+                    path="/app/cultural-profile"
+                    element={
+                        <ProtectedRoute>
+                            <CulturalProfilePage />
+                        </ProtectedRoute>
+                    }
+                />
+
+                {/* Therapist Chat - Outside AppLayout for full screen */}
+                <Route
+                    path="/app/therapist-chat/:therapistId"
+                    element={
+                        <ProtectedRoute>
+                            <TherapistChatPage />
+                        </ProtectedRoute>
+                    }
+                />
 
                 {/* Catch all route - redirect to landing page */}
                 <Route path="*" element={<LandingPage />} />

@@ -1,4 +1,4 @@
-import { Check, CheckCircle, Heart, Shield } from "lucide-react";
+import { Check, CheckCircle, Heart, Shield, User, Stethoscope } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
@@ -11,6 +11,7 @@ const OnboardingPage = () => {
         email: "",
         password: "",
         confirmPassword: "",
+        role: "USER" as "USER" | "THERAPIST",
         consent: false,
         privacyAgreed: false,
     });
@@ -89,6 +90,7 @@ const OnboardingPage = () => {
                 name: formData.name.trim(),
                 emailAddress: formData.email.trim(),
                 password: formData.password,
+                role: formData.role,
             };
 
             try {
@@ -144,6 +146,47 @@ const OnboardingPage = () => {
                         journey
                     </p>
                 </div>
+                {/* Role Selection */}
+                <div className="px-4 mb-2">
+                    <label className="text-sm font-medium mb-3 block">
+                        I am signing up as:
+                    </label>
+                    <div className="grid grid-cols-2 gap-3">
+                        <div
+                            onClick={() => setFormData({...formData, role: "USER"})}
+                            className={`p-4 rounded-xl border-2 cursor-pointer transition-all ${
+                                formData.role === "USER"
+                                    ? "border-primary bg-primary/5"
+                                    : "border-gray-200 hover:border-primary/50"
+                            }`}
+                        >
+                            <div className="flex flex-col items-center gap-2 text-center">
+                                <User className={`w-8 h-8 ${formData.role === "USER" ? "text-primary" : "text-gray-600"}`} />
+                                <div>
+                                    <div className="font-semibold">User</div>
+                                    <div className="text-xs text-gray-600">Seeking support</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div
+                            onClick={() => setFormData({...formData, role: "THERAPIST"})}
+                            className={`p-4 rounded-xl border-2 cursor-pointer transition-all ${
+                                formData.role === "THERAPIST"
+                                    ? "border-primary bg-primary/5"
+                                    : "border-gray-200 hover:border-primary/50"
+                            }`}
+                        >
+                            <div className="flex flex-col items-center gap-2 text-center">
+                                <Stethoscope className={`w-8 h-8 ${formData.role === "THERAPIST" ? "text-primary" : "text-gray-600"}`} />
+                                <div>
+                                    <div className="font-semibold">Therapist</div>
+                                    <div className="text-xs text-gray-600">Providing care</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <form
                     id="stepOneForm"
                     className=" p-4 flex flex-col w-full mx-auto gap-3"

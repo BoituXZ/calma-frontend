@@ -15,28 +15,30 @@ const ChatMessage = ({ message, userName = "U" }: ChatMessageProps) => {
 
     if (isBot) {
         return (
-            <div className="chatbotMessage p-2 flex gap-2 max-w-70 justify-self-start">
-                <div className="messageProfile bg-muted flex-auto max-w-9 h-9 flex items-center justify-center rounded-full">
-                    <h3 className="font-semibold">C</h3>
+            <div className="flex gap-3 max-w-[80%]">
+                <div className="flex-shrink-0 w-9 h-9 bg-primary/10 rounded-full flex items-center justify-center">
+                    <span className="text-primary font-semibold text-sm">C</span>
                 </div>
-                <div className="message flex-1/2 bg-muted p-2 rounded-lg">
-                    <p className="text-sm font-normal">{message.message}</p>
-                    <p className="text-xs text-muted-foreground mt-1">
-                        {timestamp}
-                    </p>
+                <div className="flex-1">
+                    <div className="bg-muted rounded-lg px-4 py-3">
+                        <p className="text-sm leading-relaxed">{message.message}</p>
+                    </div>
+                    <p className="text-xs text-muted-foreground mt-1 ml-2">{timestamp}</p>
                 </div>
             </div>
         );
     }
 
     return (
-        <div className="userMessage p-2 flex flex-row-reverse gap-2 max-w-70 ml-auto">
-            <div className="messageProfile bg-muted flex-auto min-w-9 max-w-9 h-9 flex items-center justify-center rounded-full">
-                <h3 className="font-semibold">{userName[0].toUpperCase()}</h3>
+        <div className="flex gap-3 max-w-[80%] ml-auto flex-row-reverse">
+            <div className="flex-shrink-0 w-9 h-9 bg-primary rounded-full flex items-center justify-center">
+                <span className="text-primary-foreground font-semibold text-sm">{userName?.[0]?.toUpperCase() || "U"}</span>
             </div>
-            <div className="message flex-1/2 bg-primary text-primary-foreground p-2 rounded-lg">
-                <p className="text-sm font-normal">{message.message}</p>
-                <p className="text-xs opacity-80 mt-1">{timestamp}</p>
+            <div className="flex-1">
+                <div className="bg-primary rounded-lg px-4 py-3">
+                    <p className="text-primary-foreground text-sm leading-relaxed">{message.message}</p>
+                </div>
+                <p className="text-xs text-muted-foreground mt-1 mr-2 text-right">{timestamp}</p>
             </div>
         </div>
     );
