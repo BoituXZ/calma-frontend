@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import type { LoginUser } from '../interfaces/auth.interface';
 import { Heart } from 'lucide-react';
@@ -10,13 +10,8 @@ const LoginPage = () => {
     password: '',
   });
   const [formError, setFormError] = useState('');
-  
+
   const { login, isLoading, error: authError, clearError } = useAuth();
-  const navigate = useNavigate();
-  const location = useLocation();
-  
-  // Get the page user was trying to access before being redirected to login
-  const from = location.state?.from?.pathname || '/app';
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

@@ -2,10 +2,9 @@ import { ArrowLeft, Heart, Send } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import { useAuth } from "../hooks/useAuth";
-import { sendMessage } from "../services/chatService";
-import type { ChatMessage as ChatMessageType } from "../services/chatService";
-import ChatMessage from "../components/ui/ChatMessage";
+import { sendMessage, type ChatMessage as ChatMessageType } from "../services/chatService";
 import LoadingDots from "../components/ui/LoadingDots";
+import * as ChatMessageModule from "../components/ui/ChatMessage";
 
 const ChatPage = () => {
     const navigate = useNavigate();
@@ -17,7 +16,7 @@ const ChatPage = () => {
     const messagesEndRef = useRef<HTMLDivElement>(null);
 
     const dashboardNavigation = (): void => {
-        navigate("/app");
+        navigate("/app/chat");
     };
 
     const scrollToBottom = () => {
@@ -69,72 +68,95 @@ const ChatPage = () => {
     };
 
     return (
-        <div className="h-screen bg-background flex flex-col pb-16">
-            <div className="chatPageHeader flex flex-row gap-4 p-2 px-4 bg-primary-foreground border-b border-b-border">
-                <button onClick={dashboardNavigation}>
-                    <ArrowLeft className="w-5" />
-                </button>
-                <div className="header">
-                    <h3 className="text-foreground font-semibold text-md">
-                        Support Chat
-                    </h3>
-                    <p className="text-muted-foreground text-sm">
-                        A safe space to share your thoughts
-                    </p>
-                </div>
-            </div>
-            <div className="chatPageBody p-3 flex-1 flex flex-col overflow-hidden">
-                <div className="chatContainer max-w-full bg-card rounded-lg shadow-xs border border-border py-2 flex flex-col h-full">
-                    <div className="chatHeader flex flex-row items-center p-2 px-4 flex-shrink-0">
-                        <div className="chatbotProfileContainer rounded-full bg-popover p-2">
-                            <Heart className="text-primary" />
+        <div className="h-screen bg-background flex flex-col">
+            {/* Header */}
+            <div className="bg-card border-b border-border shadow-sm">
+                <div className="flex items-center gap-4 p-4">
+                    <button
+                        onClick={dashboardNavigation}
+                        className="p-2 hover:bg-accent rounded-lg transition-colors"
+                    >
+                        <ArrowLeft className="w-5 h-5" />
+                    </button>
+                    <div className="flex items-center gap-3">
+                        <div className="bg-primary/10 p-2.5 rounded-full">
+                            <Heart className="w-5 h-5 text-primary" />
                         </div>
-                        <div className="chatbotName">
-                            <h3 className="font-semibold text-xl">Calma</h3>
+                        <div>
+                            <h3 className="font-semibold text-lg">
+                                Calma AI Assistant
+                            </h3>
+                            <p className="text-muted-foreground text-sm">
+                                Always here to listen
+                            </p>
                         </div>
                     </div>
-                    <div className="chatBody flex flex-col p-2 gap-4 flex-1 overflow-y-auto min-h-0">
-                        <div className="messages flex flex-col gap-2">
+                </div>
+            </div>
+
+            {/* Chat Container */}
+            <div className="flex-1 overflow-hidden pb-20">
+                <div className="h-full p-4">
+                    <div className="h-full bg-card rounded-lg border border-border shadow-sm flex flex-col overflow-hidden">
+                        {/* Messages Area */}
+                        <div className="flex-1 overflow-y-auto p-6 space-y-4">
                             {messages.length === 0 && (
-                                <div className="chatbotMessage p-2 flex gap-2 max-w-70 justify-self-start">
-                                    <div className="messageProfile bg-muted flex-auto max-w-9 h-9 flex items-center justify-center rounded-full">
-                                        <h3 className="font-semibold">C</h3>
+                                <div className="flex flex-col items-center justify-center h-full text-center space-y-4">
+                                    <div className="bg-primary/10 p-6 rounded-full">
+                                        <Heart className="w-12 h-12 text-primary mx-auto" />
                                     </div>
-                                    <div className="message flex-1/2 bg-muted p-2 rounded-lg">
-                                        <p className="text-sm font-normal">
-                                            Hello! I'm here to support you. How
-                                            are you feeling today?
+                                    <div>
+                                        <h3 className="text-xl font-semibold mb-2">
+                                            Welcome to Calma
+                                        </h3>
+                                        <p className="text-muted-foreground max-w-md">
+                                            I'm here to support you. Share what's on your mind, and let's talk through it together.
                                         </p>
                                     </div>
                                 </div>
                             )}
-                            {messages.map((message) => (
-                                <ChatMessage
-                                    key={message.id}
-                                    message={message}
-                                    userName={user?.name}
-                                />
-                            ))}
-                            {isLoading && <LoadingDots />}
+
+                            {messages.map((message) => {
+                                const ChatMsgComp = ChatMessageModule.default;
+                                return (
+                                    <ChatMsgComp
+                                        key={message.id}
+                                        message={message}
+                                        userName={user?.name}
+                                    />
+                                );
+                            })}
+
+                            {isLoading && (
+                                <div className="flex justify-start">
+                                    <div className="bg-muted rounded-2xl px-4 py-3">
+                                        <LoadingDots />
+                                    </div>
+                                </div>
+                            )}
                             <div ref={messagesEndRef} />
                         </div>
-                    </div>
-                    <div className="messageInputContainer flex flex-row w-full gap-2 p-2 mt-auto">
-                        <input
-                            placeholder="Share what's on your mind..."
-                            className="flex h-10 w-full rounded-lg border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm flex-1"
-                            value={inputValue}
-                            onChange={(e) => setInputValue(e.target.value)}
-                            onKeyDown={handleKeyDown}
-                            disabled={isLoading}
-                        />
-                        <button
-                            className="h-10 w-10 bg-primary flex justify-center items-center rounded-lg disabled:opacity-50"
-                            onClick={handleSendMessage}
-                            disabled={isLoading || !inputValue.trim()}
-                        >
-                            <Send className="text-white font-normal text-sm w-4" />
-                        </button>
+
+                        {/* Input Area */}
+                        <div className="border-t border-border bg-muted/30 p-4">
+                            <div className="flex gap-3">
+                                <input
+                                    placeholder="Share what's on your mind..."
+                                    className="flex-1 h-12 rounded-lg border border-input bg-background px-4 py-3 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                                    value={inputValue}
+                                    onChange={(e) => setInputValue(e.target.value)}
+                                    onKeyDown={handleKeyDown}
+                                    disabled={isLoading}
+                                />
+                                <button
+                                    className="h-12 w-12 bg-primary hover:bg-primary/90 flex justify-center items-center rounded-lg shadow-sm disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+                                    onClick={handleSendMessage}
+                                    disabled={isLoading || !inputValue.trim()}
+                                >
+                                    <Send className="text-primary-foreground w-5 h-5" />
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

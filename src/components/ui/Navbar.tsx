@@ -1,15 +1,11 @@
 import {
-    Book,
-    BookA,
-    BookAIcon,
-    BookCheck,
     Calendar,
-    Contact,
+    CalendarCheck,
     Home,
-    Library,
     LibraryBig,
     MessageCircle,
     Settings,
+    UserRound,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
@@ -18,7 +14,7 @@ const Navbar = () => {
     return (
         <div
             id="navContainer"
-            className="flex justify-evenly gap-5 items-center h-15 fixed bottom-0 w-screen bg-white rounded-xl"
+            className="flex justify-evenly gap-2 items-center h-15 fixed bottom-0 w-screen bg-white rounded-xl overflow-x-auto"
         >
             <div
                 className="Home flex flex-col  justify-evenly items-center"
@@ -45,6 +41,24 @@ const Navbar = () => {
                 <Calendar className="h-5 text-black/80" />
                 <p className="text-xs text-black/80 font-medium  hover:bg-accent">
                     Mood
+                </p>
+            </div>
+            <div
+                className="Therapists flex flex-col  justify-evenly items-center gap-1"
+                onClick={() => navigate("therapists")}
+            >
+                <UserRound className="h-5 text-black/80" />
+                <p className="text-xs text-black/80 font-medium  hover:bg-accent">
+                    Therapists
+                </p>
+            </div>
+            <div
+                className="Appointments flex flex-col  justify-evenly items-center gap-1"
+                onClick={() => navigate("appointments")}
+            >
+                <CalendarCheck className="h-5 text-black/80" />
+                <p className="text-xs text-black/80 font-medium  hover:bg-accent">
+                    Appts
                 </p>
             </div>
             <div

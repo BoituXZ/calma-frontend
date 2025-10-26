@@ -11,7 +11,8 @@ export interface Therapist {
     id: string;
     name: string;
     email: string;
-    role: string;
+    role: 'USER' | 'THERAPIST' | 'ADMIN';
+    createdAt?: string;
     specialization?: string;
     bio?: string;
 }

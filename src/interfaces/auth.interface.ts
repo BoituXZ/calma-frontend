@@ -2,6 +2,7 @@ export interface RegisterUser {
     name: string
     emailAddress: string
     password: string
+    role?: 'USER' | 'THERAPIST'
 }
 
 
